@@ -1,32 +1,32 @@
 <!DOCTYPE html>
-<html lang="zh-cn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 7.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/BrahmaMantra/BrahmaMantra.github.io/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/BrahmaMantra/BrahmaMantra.github.io/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/BrahmaMantra/BrahmaMantra.github.io/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/BrahmaMantra/BrahmaMantra.github.io/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-<link rel="stylesheet" href="/BrahmaMantra/BrahmaMantra.github.io/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/BrahmaMantra/BrahmaMantra.github.io/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.com","root":"/BrahmaMantra/BrahmaMantra.github.io/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"brahmamantra.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈内存管理（以linux x86为例）">
-<meta property="og:url" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="https://brahmamantra.github.io/2024/12/01/mm/index.html">
+<meta property="og:site_name" content="BrahmaMantra&#39;s Blog">
 <meta property="og:description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
-<meta property="og:locale" content="zh_CN">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center">
@@ -44,7 +44,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
 
-<link rel="canonical" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/">
+<link rel="canonical" href="https://brahmamantra.github.io/2024/12/01/mm/">
 
 
 <script id="page-configurations">
@@ -53,11 +53,11 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'zh-cn'
+    lang   : 'en'
   };
 </script>
 
-  <title>浅谈内存管理（以linux x86为例） | Hexo</title>
+  <title>浅谈内存管理（以linux x86为例） | BrahmaMantra's Blog</title>
   
 
 
@@ -106,9 +106,9 @@
 
   <div class="site-meta">
 
-    <a href="/BrahmaMantra/BrahmaMantra.github.io/" class="brand" rel="start">
+    <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Hexo</h1>
+      <h1 class="site-title">BrahmaMantra's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -126,17 +126,17 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/BrahmaMantra/BrahmaMantra.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
 
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/BrahmaMantra/BrahmaMantra.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/BrahmaMantra/BrahmaMantra.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
   </ul>
@@ -166,17 +166,17 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/01/mm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
+      <meta itemprop="image" content="/images/touxiang.png">
       <meta itemprop="name" content="BrahmaMantra">
       <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="BrahmaMantra's Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -471,7 +471,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/hello-world/" rel="prev" title="Hello World">
+    <a href="/2024/12/01/hello-world/" rel="prev" title="Hello World">
       <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
       <div class="post-nav-item"></div>
@@ -540,14 +540,14 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="BrahmaMantra"
-      src="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
+      src="/images/touxiang.png">
   <p class="site-author-name" itemprop="name">BrahmaMantra</p>
   <div class="site-description" itemprop="description">功利主义的导向，让我们忘记生命本身就是一场旅程</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/BrahmaMantra/BrahmaMantra.github.io/archives/">
+          <a href="/archives/">
         
           <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
@@ -557,11 +557,11 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/BrahmaMantra/BrahmaMantra.github.io/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
@@ -608,19 +608,19 @@
   </div>
 
   
-  <script src="/BrahmaMantra/BrahmaMantra.github.io/lib/anime.min.js"></script>
-  <script src="/BrahmaMantra/BrahmaMantra.github.io/lib/velocity/velocity.min.js"></script>
-  <script src="/BrahmaMantra/BrahmaMantra.github.io/lib/velocity/velocity.ui.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/BrahmaMantra/BrahmaMantra.github.io/js/utils.js"></script>
+<script src="/js/utils.js"></script>
 
-<script src="/BrahmaMantra/BrahmaMantra.github.io/js/motion.js"></script>
-
-
-<script src="/BrahmaMantra/BrahmaMantra.github.io/js/schemes/pisces.js"></script>
+<script src="/js/motion.js"></script>
 
 
-<script src="/BrahmaMantra/BrahmaMantra.github.io/js/next-boot.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
 
 
 
