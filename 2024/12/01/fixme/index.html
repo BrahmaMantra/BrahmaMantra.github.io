@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -17,27 +17,32 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"github.com","root":"/BrahmaMantra/BrahmaMantra.github.io/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"github.com","root":"/BrahmaMantra/BrahmaMantra.github.io/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="fixme:PageLevel的类型MTRR 是 x86 架构中的一组寄存器，用于控制不同内存区域的缓存属性。通过配置 MTRR，可以优化系统性能和兼容性。操作系统在启动时通常会配置 MTRR，以确保不同内存区域具有适当的缓存属性。 初次EPT_VIOLATION的时候，gpa&#x3D;0，要建立从gpa到hpa的映射，也就是ept映射，处理完各个寄存器以及mmu等状态后  do_page_fa">
+  <meta name="description" content="内容借鉴自blogos,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。 对内存管理概念有基础的同学可以跳转到 x86_64 中的分页  操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="fixme:PageLevel的类型MTRR 是 x86 架构中的一组寄存器，用于控制不同内存区域的缓存属性。通过配置 MTRR，可以优化系统性能和兼容性。操作系统在启动时通常会配置 MTRR，以确保不同内存区域具有适当的缓存属性。 初次EPT_VIOLATION的时候，gpa&#x3D;0，要建立从gpa到hpa的映射，也就是ept映射，处理完各个寄存器以及mmu等状态后  do_page_fa">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-7.png">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-6.png">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-2.png">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-3.png">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-4.png">
-<meta property="og:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-5.png">
+<meta property="og:description" content="内容借鉴自blogos,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。 对内存管理概念有基础的同学可以跳转到 x86_64 中的分页  操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/8ed5cdec88884e5bb92d46885ca405cb.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/efb2807754d843119b8591cc47a977ba.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/e95ab187fa7f43cdae8967f9e2bceb1a.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/42cebfb8aa024d05ade285a50b117b5f.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/4c76b55820894eacb3e04f1417cda487.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/b7282ebfb9c1420299ca8ade1a08a2a6.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/1f20150cc5a3464986fc5e09e597798c.png#pic_center">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/64e5878e33f74d669954e9ac18212152.png#pic_center">
 <meta property="article:published_time" content="2024-12-01T09:36:02.407Z">
-<meta property="article:modified_time" content="2024-12-01T09:36:22.346Z">
+<meta property="article:modified_time" content="2024-12-02T04:43:39.526Z">
 <meta property="article:author" content="BrahmaMantra">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/image-7.png">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
 
 <link rel="canonical" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/">
 
@@ -48,7 +53,7 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'en'
+    lang   : 'zh-cn'
   };
 </script>
 
@@ -161,13 +166,13 @@
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
     <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
+      <meta itemprop="image" content="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
       <meta itemprop="name" content="BrahmaMantra">
-      <meta itemprop="description" content="月明帘下转身难">
+      <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -184,10 +189,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-12-01 17:36:02 / Modified: 17:36:22" itemprop="dateCreated datePublished" datetime="2024-12-01T17:36:02+08:00">2024-12-01</time>
+              <time title="Created: 2024-12-01 17:36:02" itemprop="dateCreated datePublished" datetime="2024-12-01T17:36:02+08:00">2024-12-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-02 12:43:39" itemprop="dateModified" datetime="2024-12-02T12:43:39+08:00">2024-12-02</time>
+              </span>
 
           
 
@@ -200,35 +211,255 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="fixme"><a href="#fixme" class="headerlink" title="fixme:"></a>fixme:</h3><p>PageLevel的类型<br>MTRR 是 x86 架构中的一组寄存器，用于控制不同内存区域的缓存属性。通过配置 MTRR，可以优化系统性能和兼容性。操作系统在启动时通常会配置 MTRR，以确保不同内存区域具有适当的缓存属性。</p>
-<p>初次EPT_VIOLATION的时候，gpa&#x3D;0，要建立从gpa到hpa的映射，也就是ept映射，处理完各个寄存器以及mmu等状态后</p>
+        <ul>
+<li>内容借鉴自<a target="_blank" rel="noopener" href="https://os.phil-opp.com/zh-CN/paging-introduction/">blogos</a>,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。</li>
+<li>对内存管理概念有基础的同学可以跳转到<a href="#x86_64-paging"> x86_64 中的分页</a></li>
+</ul>
+<h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
+<li>操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用<strong>段页式</strong>进行管理。</li>
+</ul>
+<h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想</p>
 <ul>
-<li><p>do_page_fault 初始化page_fault信息，能知道gfn</p>
+<li><p>CPU可根据内存访问方式自动确定段寄存器的定义：对于指令获取操作，使用代码段寄存器 CS；对于栈操作（入栈&#x2F;出栈），使用栈段寄存器 SS；对于其他指令，则使用数据段寄存器 DS 或额外段寄存器 ES。另外还有两个后来添加的扩展段寄存器 FS 和 GS，可以随意使用。</p>
 </li>
-<li><p>gfn_to_memslot 找到包含 gfn 的 memslot 的指针，放在page_fault.slot里面</p>
+<li><p>在最初版本的内存分段中，段寄存器仅仅是直接包含了偏移量（offset），并不包含任何权限控制，直到<strong>保护模式</strong>这个概念的出现。当CPU进入此模式后，段描述符会包含一个本地或全局的 描述符表 索引，它对应的数据包含了offset、段的通过加载各个进程所属的全局&#x2F;本地描述符表，可以实现进程仅能访问属于自己的内存区域的效大小和访问权限。操作系统也由此实现了进程隔离。</p>
 </li>
-<li><p>__gfn_to_hva_many 得到hva（照着之前的kvm写的）（要用到page_fault的slot）</p>
-</li>
-<li><p>hva_to_pfn 得到pfn，可以说相当于知道了hpa（照着之前的kvm写的），放在 page_fault.pfn里面</p>
+<li><p>针对在判断权限前习如更正内存地址这个问题，内存分段使用了一个如今已经高度普及的技术：虚拟内存。</p>
 </li>
 </ul>
-<p>找到ept root物理地址 kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;mm&#x2F;mod.rs:184</p>
-<h3 id="疑问？"><a href="#疑问？" class="headerlink" title="疑问？"></a>疑问？</h3><ul>
-<li><p>内核里面应该有相似的多级页表查询&#x2F;映射的机制，是不是可以借鉴或者复用 kernel&#x2F;src&#x2F;mm&#x2F;page.rs:712 kvm:kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;kvm&#x2F;vmx&#x2F;ept.rs:91</p>
+<h4 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h4><ul>
+<li><p>所谓虚拟内存，就是将物理存储器地址抽象为一段完全独立的内存区域，在直接访问物理存储器之前，加入了一个地址转换的步骤。对于内存分页机制而言，地址转换就是在虚拟地址的基础上加入偏移量，如段地址0x1234000，偏移量为 0x1111000 ，对应的物理内存地址是0x1234000+0x1111000&#x3D; 0x2345000。</p>
 </li>
-<li><p>我感觉得到ept root 物理地址(不知道存哪了，可能在真正要)后，按照索引在ept页表往下查，然后缺页就alloc块给它然后加入页表建立映射（gpa-&gt;hpa），直到找到目标层的level，<a target="_blank" rel="noopener" href="https://code.dragonos.org.cn/xref/linux-6.6.21/arch/x86/kvm/mmu/tdp_mmu.c?fi=kvm_tdp_mmu_map#952">linux实现</a></p>
+<li><p>比如同时执行两个相同的程序：</p>
 </li>
-<li><p>__va和virt_2_phys是一样的吗？</p>
+<li><p><img src="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center" alt="在这里插入图片描述"></p>
 </li>
-<li><p>mm.h的作用</p>
+<li><p>如你所见，这就是两个相同程序的内存分配情况，两者具有不同的地址偏移量（即 段基址）。第一个程序实例的段基址为100，所以其虚拟地址范围0-150换算成物理地址就是100-250。第二个程序实例的段基址为300，所以其虚拟地址范围0-150换算成物理地址就是300-450。所以该机制允许程序共用同一套代码逻辑，使用同样的虚拟地址，并且不会干扰到彼此。</p>
+</li>
+<li><p>该机制的另一个优点就是让程序不局限于特定的某一段物理内存，而是依赖另一套虚拟内存地址，从而让操作系统在不重编译程序的前提下使用全部的内存区域。</p>
 </li>
 </ul>
-<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><p>tdp_page_fault :at src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;mmu&#x2F;mmu_internal.rs:233<br>enter_guest :   at src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;kvm_host&#x2F;vcpu.rs:840<br>handle_ept_violation :at src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;vmx&#x2F;exit.rs:278<br>try_handle_exit: at kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;vmx&#x2F;exit.rs:250<br>vmlaunch : at kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;vmx&#x2F;vmenter.S:103<br>page fault :kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;mmu&#x2F;mmu_internal.rs:105</p>
-<p>kernel&#x2F;src&#x2F;mm&#x2F;kernel_mapper.rs<br>tdp_map: b kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;mmu&#x2F;mmu_internal.rs:310<br>debug :  b kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;vmx&#x2F;exit.rs:416<br>debug_eptp :b kernel&#x2F;src&#x2F;arch&#x2F;x86_64&#x2F;vm&#x2F;vmx&#x2F;ept&#x2F;mod.rs:400</p>
-<p>exit_qualification 0x184<br>error_code 0x100000011</p>
-<p>VMEXIT_INSTR_LEN &#x3D; 0x3<br>VMEXIT_INSTR_INFO &#x3D; 0x0<br>PAGE_FAULT_ERR_CODE_MASK &#x3D; 0x9<br>PAGE_FAULT_ERR_CODE_MATCH &#x3D; 0x1<br>EPTP_LIST_ADDR_FULL &#x3D; 0x0</p>
-<p>EXCEPTION_BITMAP &#x3D; 0x64042<br>VM_INSTRUCTION_ERROR &#x3D; 0x1c</p>
-<p>x&#x2F;16x 0xffff8000<br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-7.png" alt="alt text"><br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-6.png" alt="alt text"><br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-2.png" alt="alt text"><br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-3.png" alt="alt text"><br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-4.png" alt="alt text"><br><img src="/BrahmaMantra/BrahmaMantra.github.io/image-5.png" alt="alt text"></p>
+<h4 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h4><ul>
+<li><p>虚拟内存机制已经让内存分段机制十分强大，但也有碎片化的问题，请看，如果我们同时执行三个程序实例的话：<img src="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>在不能重叠使用的前提下，我们完全找不到足够的地方来容纳第三个程序，因为剩余的连续空间已经不够了。此时的问题在于，我们需要使用 连续 的内存区域，不要将那些中间的空白部分白白浪费掉。</p>
+</li>
+<li><p>比较合适的办法就是暂停程序运行，将内存块移动到一个连续区间内，更新段基址信息，然后恢复程序运行：</p>
+</li>
+<li><p><img src="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>但这样做也有一些问题，内存整理程序往往需要拷贝一段比较大的内存，这会很大程度上影响性能，但是又必须在碎片问题变得过于严重前完成这个操作。同时由于其消耗时间的不可预测性，程序很可能会随机挂起，甚至在用户视角下失去响应。</p>
+</li>
+<li><p>这也是大多数系统放弃内存分段技术的原因之一，事实上，该技术已经被x86平台的64位模式所抛弃，因为<strong>内存分页技术</strong>已经完全解决了碎片化问题。</p>
+</li>
+</ul>
+<h3 id="内存分页"><a href="#内存分页" class="headerlink" title="内存分页"></a>内存分页</h3><ul>
+<li>内存分页的思想依然是使用虚拟地址映射物理地址，但是其分配单位变成了固定长度的较小的内存区域。这些虚拟内存块被称为<strong>页 Page</strong>(大小通常为4K Bytes)，而其对应的物理内存则被称为<strong>页帧 Page Frame</strong>，每一Page都可以映射到一个对应的Page Frame中。这也就意味着我们可以将程序所使用的一大块内存区域打散到所有物理内存中(以4K，也就是Page Size为单位)，而不必分配一块连续的区域。</li>
+<li>其优势就在于，如果我们遇到上文中提到的内存碎片问题时，内存分页技术会这样解决它：</li>
+<li>例如我们将页的单位设置为50 Bytes，也就是说我们的每一个程序实例所使用的内存都被分割为三页。每一页都可以独立映射到一个页帧中，因此连续的虚拟内存并不一定需要对应连续的物理内存区域，因此也就无需进行内存碎片整理了。</li>
+<li><img src="https://i-blog.csdnimg.cn/direct/8ed5cdec88884e5bb92d46885ca405cb.png#pic_center" alt="在这里插入图片描述"></li>
+</ul>
+<h4 id="潜在碎片"><a href="#潜在碎片" class="headerlink" title="潜在碎片"></a>潜在碎片</h4><ul>
+<li>对比内存分段，内存分页选择用较多的较小且固定长度的内存区域代替较少的较大且长度不固定的内存区域。正因为如此，不会有页帧因为长度过小而产生内存碎片。</li>
+<li>然而这只是 表面上如此，实际上依然存在着名为<strong>内部碎片</strong>的隐蔽内存碎片，造成内部碎片的原因是并非每个内存区域都是分页单位的整数倍。比如一个程序需要101字节的内存，但它依然需要分配3个长度为50字节的页，最终造成了49字节的内存浪费，区别于内存分段造成的内存碎片（有些地方也叫外部碎片），这种情况被称为<strong>内部碎片</strong>（毕竟是发生在Page内部的）。</li>
+<li>内部碎片虽然也很可恶，但是无论如何也比内存分段造成的内存碎片要好得多，尽管其依然会浪费内存空间，但是无需碎片整理，且碎片数量是可预测的（每一个虚拟内存空间平均会造成半个页帧的内存浪费）。</li>
+</ul>
+<h4 id="页表-Page-Table"><a href="#页表-Page-Table" class="headerlink" title="页表 Page Table"></a>页表 Page Table</h4><ul>
+<li><p>我们应当预见到，在操作系统开始运行后，会存在数以百万计的Page-&gt;Page Frame映射关系，这些映射关系需要存储在某个地方。分段技术可以为每个活动的内存区域都指定一个段寄存器，但是分页技术不行，因为其使用到的页的数量实在是太多了，远多于寄存器数量，所以分页技术采用了一种叫做<strong>页表</strong>的结构来存储映射信息。</p>
+</li>
+<li><p>以上面的应用场合为例，页表看起来是这样子的：<br><img src="https://i-blog.csdnimg.cn/direct/efb2807754d843119b8591cc47a977ba.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>我们可以看到每个程序实例都有其专有的页表，但当前正在活跃的页表指针会被存储到特定的CPU寄存器中，在 x86 架构中，该寄存器被称为<strong>CR3</strong>。操作系统的任务之一，就是在程序运行前，把当前所使用的页表指针推进对应的寄存器中。</p>
+</li>
+<li><p>每次内存访问CPU都会从寄存器获取页表指针，并从页表中获取虚拟地址所对应的页帧，这一步操作完全由硬件完成，对于程序而言是完全透明的。为了加快地址转换的速度，许多CPU架构都加入了一个能够存储最后一次地址转换相关信息的特殊缓存（TLB）</p>
+</li>
+<li><p>根据架构实现的不同，页表也可以在 flags 字段存储一些额外的属性，如访问权限之类。在上面的场景下。 “r&#x2F;w” 这个 flag 可以使该页同时能够读和写。</p>
+</li>
+</ul>
+<h4 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h4><ul>
+<li><p>上文中的简单页表在较大的地址空间下会有个问题：太浪费内存了。打个比方，一个程序需要使用4个虚拟内存页 0、1_000_000、1_000_050 和 1_000_100：</p>
+</li>
+<li><p><img src="https://i-blog.csdnimg.cn/direct/e95ab187fa7f43cdae8967f9e2bceb1a.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>尽管它仅仅会使用4个页帧，但是页表中有百万级别的映射条目，而我们还不能释放那些空白的条目，因为这会对地址转换造成很大的风险（比如可能无法保证4号页依然对应4号页帧）。</p>
+</li>
+<li><p>我们可以使用<strong>两级页表</strong>来避免内存浪费，其基本思路就是对不同的地址区域使用不同的页表。地址区域和一级页表的映射关系被存储在一个被称为二级页表的额外表格中。</p>
+</li>
+<li><p>举个例子，我们先假设每个一级页表映射<strong>10_000B</strong>的内存空间，在上文所述的应用场合下，此时的页表结构看上去是这样的：<br><img src="https://i-blog.csdnimg.cn/direct/42cebfb8aa024d05ade285a50b117b5f.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>虚拟地址中的页<strong>0</strong>位于第一个<strong>10,000</strong>字节的内存区域内，位于内存区域<strong>0</strong>内，对应一级页表<strong>T1</strong>。</p>
+</li>
+<li><p>虚拟地址中的页 <strong>1,000,000</strong>、<strong>1,000,050</strong> 和 <strong>1,000,100</strong> 均可以映射到第 <strong>100</strong> 个 <strong>10,000</strong> 字节的内存区域内（对应二级页表），所以位于内存区域 <strong>1,000,000</strong> 中，该内存区域指向一级页表 <strong>T2</strong>。但这三个页分别对应该一级页表 <strong>T2</strong> 中的页帧 <strong>100</strong>、<strong>150</strong> 和 <strong>200</strong>，因为一级页表中是不存储内存区域偏移量的（我们是算出来偏移量offset然后去找帧号）。</p>
+</li>
+<li><p>比如说，要表示虚拟地址<strong>1,000,050</strong>所对应的物理地址，可以按照以下步骤进行：</p>
+</li>
+</ul>
+<ol>
+<li>确定页号：假设每页的大小为 <strong>10,000</strong> 字节，那么 <strong>1,000,050</strong> (在二级页表中)所在的页号为 <strong>1,000,050</strong> &#x2F; <strong>10,000</strong> &#x3D; 1,000（取整），对应了level 2页表的Region（1_000_000），确认了level 1页表T2。</li>
+<li>确定帧号：根据描述，此时<strong>1,000,050</strong> % <strong>10,000</strong> &#x3D; 50（在T2的偏移量为50的地方），确认帧号，对应一级页表 T2 中的页帧 <strong>150</strong>。</li>
+</ol>
+<ul>
+<li><p>也就是说，虚拟地址 <strong>1,000,050</strong> 被分解为页号和帧号。页号 <strong>100</strong> 对应二级页表中的一个条目，该条目指向一级页表 <strong>T2</strong>。在一级页表 T2 中，偏移量 <strong>50</strong> 对应页帧 <strong>150</strong>，这样我们就找到了<strong>1,000,050</strong>对应的物理地址帧号<strong>150</strong>。</p>
+</li>
+<li><p>在这个场合中，二级页表中还是出现了 <strong>100</strong> 个被浪费的位置（在lebel 2页表中），不过无论如何也比之前数以百万计的浪费好多了，因为我们没有额外创建指向 <strong>10,000</strong> 到 <strong>1,000,000</strong> 这段内存区域的一级页表。</p>
+</li>
+<li><p>同理，两级页表的原理可以扩展到三级、四级甚至更多的级数。通常而言，可以让页表寄存器指向最高级数的表，然后一层一层向下寻址，直到抵达一级页表，获取页帧地址。这种技术就叫做<strong>多级</strong>或<strong>多层</strong>页表。</p>
+</li>
+<li><p>那么现在我们已经明白了内存分页和多级页表机制的工作原理，下面我们会探索一下在 <strong>x86_64</strong> 平台下内存分页机制是如何实现的（假设 CPU 运行在 <strong>64 位</strong>模式下）。</p>
+<h3 id="x86_64-paging">x86_64中的分页</h3>
+</li>
+<li><p>x86_64 平台使用4级页表，页大小为4KiB，无论层级，每个页表均具有512个条目，每个条目占用8字节，所以每个页表固定占用 512 * 8B &#x3D; 4KiB，正好占满一个内存页。</p>
+</li>
+<li><p>每一级的页表索引号都可以通过虚拟地址推导出来：<br><img src="https://i-blog.csdnimg.cn/direct/4c76b55820894eacb3e04f1417cda487.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>我们可以看到，每个表索引号占据 9 个比特，这当然是有道理的，每个表都有 2^9 &#x3D; 512 个条目，低12位用来表示内存页的偏移量（2^12 bytes &#x3D; 4KiB，而上文提到页大小为4KiB）。第 48-64 位毫无用处，这也就意味着 x86_64 并非真正的 64 位，因为它实际上支持 48 位地址（当然，根据摩尔定律，以后肯定是能用上的QWQ）。</p>
+</li>
+<li><p>尽管48-64位毫无用处，但依然不被允许随意赋值，而是必须将其设置为与47位相同的值以保证地址唯一性，由此留出未来对此进行扩展的可能性，如实现5级页表。该技术被称为 符号扩展，理由是它与 二进制补码 机制真的太相似了。当地址不符合该机制定义的规则时，CPU会抛出异常。</p>
+</li>
+<li><p>值得注意的是，英特尔最近发布了一款代号是冰湖的CPU，它的新功能之一就是可选支持能够将虚拟地址从48位扩展到57位的 5级页表。但是针对一款特定的CPU做优化在现阶段并没有多少意义，所以本文仅会涉及标准的4级页表。</p>
+</li>
+</ul>
+<h4 id="地址转换范例"><a href="#地址转换范例" class="headerlink" title="地址转换范例"></a>地址转换范例</h4><ul>
+<li><p><strong>PGD</strong> (Page Global Directory)</p>
+<ul>
+<li><strong>PUD</strong> (Page Upper Directory)<ul>
+<li><strong>PMD</strong> (Page Middle Directory)<ul>
+<li><strong>PT</strong> (Page Table)<ul>
+<li><strong>Page Frame 物理页帧</strong> (Physical Page Frame)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>请看下图，这就是一个典型的地址转换过程的范例：（怕你们忘了，cr3 寄存器保存了当前正在使用的页全局目录PGD的物理地址。这个地址是多级页表转换过程的起点）<br><img src="https://i-blog.csdnimg.cn/direct/b7282ebfb9c1420299ca8ade1a08a2a6.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>在每一级的页表（除一级页表外）中，都存在着指向下一级页表的指针，1级页表则存放着直接指向页帧地址的指针。注意，这里的指针，都是指页表的<strong>物理地址</strong>！！，而非虚拟地址，否则CPU会因为需要进行额外的地址转换而陷入无限递归中。（因为一旦要从虚拟地址-&gt;物理地址，就要查页表，查页表还给你返回虚拟地址，又要你从虚拟地址-&gt;物理地址，那不就套娃了嘛0.0）</p>
+</li>
+<li><p>最终，寻址结果是上图中的两个蓝色区域，根据页表查询结果，它们的虚拟地址分别是 <strong>0x803FE7F000</strong> 和 <strong>0x803FE00000</strong>，那么让我们看一看当程序尝试访问内存地址 <strong>0x803FE7F5CE</strong> 时会发生什么事情。首先我们需要把地址转换为二进制，然后确定该地址所对应的页表索引和页偏移量：<br><img src="https://i-blog.csdnimg.cn/direct/1f20150cc5a3464986fc5e09e597798c.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>通过这些索引，我们就可以通过依次查询多级页表来定位最终要指向的页帧：</p>
+<ol>
+<li>首先，我们需要从 CR3 寄存器中读出4级页表的物理地址。</li>
+<li>4级页表的索引号是1，所以我们可以看到3级页表的地址是16KiB。</li>
+<li>载入3级页表，根据索引号0，确定2级页表的地址是24KiB。</li>
+<li>载入2级页表，根据索引号511，确定1级页表的地址是32KiB。</li>
+<li>载入1级页表，根据索引号127，确定该地址所对应的页帧地址为12KiB，使用Hex表达可写作 0x3000。</li>
+<li>最终步骤就是将最后的页偏移量拼接到页帧地址上，即可得到物理地址，即 0x3000 + 0x5ce &#x3D; 0x35ce。<br>  <img src="https://i-blog.csdnimg.cn/direct/64e5878e33f74d669954e9ac18212152.png#pic_center" alt="在这里插入图片描述"></li>
+</ol>
+</li>
+<li><p>由上图可知，该页帧在一级页表中的权限被标记为<strong>r</strong>，即只读，硬件层面已经确保当我们试图写入数据的时候会抛出异常。较高级别的页表的权限设定会覆盖较低级别的页表，如3级页表中设定为只读的区域，其所关联的所有下级页表对应的内存区域均会被认为是只读，低级别的页表本身的设定会被忽略。</p>
+</li>
+<li><p>注意，示例图片中为了简化显示，看起来每个页表都只有一个条目，但实际上，4级以下的页表每一层都可能存在多个实例，其数量上限如下：</p>
+<ul>
+<li>1个4级页表</li>
+<li>512个3级页表（因为4级页表可以有512个条目）</li>
+<li>512*512个2级页表（因为每个3级页表可以有512个条目）</li>
+<li>512<em>512</em>512个1级页表（因为每个2级页表可以有512个条目）</li>
+</ul>
+</li>
+</ul>
+<h4 id="页表格式"><a href="#页表格式" class="headerlink" title="页表格式"></a>页表格式</h4><p>在 x86_64 平台下，页表是一个具有512个条目的数组，于Rust而言就是这样：（没学过rust就不用管啦）</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#[repr(align(4096))]</span></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">struct</span> <span class="title class_">PageTable</span> &#123;</span><br><span class="line">    entries: [PageTableEntry; <span class="number">512</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>每个页表条目长度都是 8 字节（64 比特），其内部结构如下：（4096&#x2F;512&#x3D;8）</p>
+<table>
+<thead>
+<tr>
+<th>Bit(s)</th>
+<th>名字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>present</td>
+<td>该页目前在内存中</td>
+</tr>
+<tr>
+<td>1</td>
+<td>writable</td>
+<td>该页可写</td>
+</tr>
+<tr>
+<td>2</td>
+<td>user accessible</td>
+<td>如果没有设定，仅内核代码可以访问该页</td>
+</tr>
+<tr>
+<td>3</td>
+<td>write through caching</td>
+<td>写操作直接应用到内存</td>
+</tr>
+<tr>
+<td>4</td>
+<td>disable cache</td>
+<td>对该页禁用缓存</td>
+</tr>
+<tr>
+<td>5</td>
+<td>accessed</td>
+<td>当该页正在被使用时，CPU 设置该比特的值</td>
+</tr>
+<tr>
+<td>6</td>
+<td>dirty</td>
+<td>当该页正在被写入时，CPU 设置该比特的值</td>
+</tr>
+<tr>
+<td>7</td>
+<td>huge page&#x2F;null</td>
+<td>在 P1 和 P4 状态时必须为 0，在 P3 时创建一个 1 GiB 的内存页，在 P2 时创建一个 2 MiB 的内存页</td>
+</tr>
+<tr>
+<td>8</td>
+<td>global</td>
+<td>当地址空间切换时，该页尚未应用更新（CR4 寄存器中的 PGE 比特位必须一同被设置）</td>
+</tr>
+<tr>
+<td>9-11</td>
+<td>available</td>
+<td>可被操作系统自由使用</td>
+</tr>
+<tr>
+<td>12-51</td>
+<td>physical address</td>
+<td>经过 52 比特对齐过的页帧地址，或下一级的页表地址</td>
+</tr>
+<tr>
+<td>52-62</td>
+<td>available</td>
+<td>可被操作系统自由使用</td>
+</tr>
+<tr>
+<td>63</td>
+<td>no execute</td>
+<td>禁止在该页中运行代码（EFER 寄存器中的 NXE 比特位必须一同被设置）</td>
+</tr>
+</tbody></table>
+<ul>
+<li>我们可以看到，仅12–51位会用于存储页帧地址或页表地址，其余比特都用于存储标志位，或由操作系统自由使用。 其原因就是，该地址总是指向一个4096字节对齐的地址、页表或者页帧的起始地址。 这也就意味着0-11位始终为0，没有必要存储这些东西，硬件层面在使用该地址之前，也会将这12位比特设置为0，52-63位同理，因为x86_64平台仅支持52位物理地址（类似于上文中提到的仅支持48位虚拟地址的原因）。</li>
+<li>进一步说明一下可用的标志位：（大概看看就好）<ul>
+<li><strong>present</strong> 标志位并非是指未映射的页，而是指其对应的内存页由于物理内存已满而被交换到硬盘中，如果该页在换出之后再度被访问，则会抛出 page fault 异常，此时操作系统应该将此页重新载入物理内存以继续执行程序。</li>
+<li><strong>writable</strong> 和 <strong>no execute</strong> 标志位分别控制该页是否可写，以及是否包含可执行指令。</li>
+<li><strong>accessed</strong> 和 <strong>dirty</strong> 标志位由 CPU 在读写该页时自动设置，该状态信息可用于辅助操作系统的内存控制，如判断哪些页可以换出，以及换出到硬盘后页里的内容是否已被修改。</li>
+<li><strong>write through caching</strong> 和 <strong>disable cache</strong> 标志位可以单独控制每一个页对应的缓存。</li>
+<li><strong>user accessible</strong> 标志位决定了页中是否包含用户态的代码，否则它仅当 CPU 处于核心态时可访问。该特性可用于在用户态程序运行时保持内核代码映射以加速系统调用。然而，Spectre 漏洞会允许用户态程序读取到此类页的数据。</li>
+<li><strong>global</strong> 标志位决定了该页是否会在所有地址空间都存在，即使切换地址空间，也不会从地址转换缓存（参见下文中关于 TLB 的章节）中被移除。一般和 <strong>user accessible</strong> 标志位共同使用，在所有地址空间映射内核代码。</li>
+<li><strong>huge page</strong> 标志位允许 2 级页表或 3 级页表直接指向页帧来分配一块更大的内存空间，该标志位被启用后，页大小会增加 512 倍。就结果而言，对于 2 级页表的条目，其会直接指向一个 2 MiB &#x3D; 512 * 4 KiB 大小的大型页帧，而对于 3 级页表的条目，就会直接指向一个 1 GiB &#x3D; 512 * 2 MiB 大小的巨型页帧。通常而言，这个功能会用于节省地址转换缓存的空间，以及降低逐层查找页表的耗时。</li>
+</ul>
+</li>
+<li>x86_64 crate 为我们提供了 page tables 的结构封装，以及其内部条目 entries，所以我们无需自己实现具体的结构。</li>
+</ul>
+<h4 id="地址转换后备缓冲区（TLB）"><a href="#地址转换后备缓冲区（TLB）" class="headerlink" title="地址转换后备缓冲区（TLB）"></a>地址转换后备缓冲区（TLB）</h4><ul>
+<li>显而易见，4级页表使地址转换过程变得有点慢，每次转换都需要进行4次内存访问。为了改善这个问题，x86_64平台将最后几次转换结果放在所谓的 地址转换后备缓冲区（TLB）中，这样对同样地址的连续重复转换就可以直接返回缓存中存储的结果。</li>
+<li>不同于CPU缓存，TLB并非是完全对外透明的，它在页表变化时并不会自动更新或删除被缓存的结果。这也就是说，内核需要在页表发生变化时，自己来处理TLB的更新。针对这个需要，CPU也提供了一个用于从TLB删除特定页的缓存的指令 invlpg （“invalidate page”），调用该指令之后，下次访问该页就会重新生成缓存。不过还有一个更彻底的办法，通过手动写入 CR3 寄存器可以制造出模拟地址空间切换的效果，TLB也会被完全刷新。x86_64 crate 中的 tlb module 提供了上面的两种手段，并封装了对应的函数。</li>
+<li>请注意，在修改页表之后，同步修改TLB是十分十分重要的事情，不然CPU可能会返回一个错误的物理地址，因为这种原因造成的bug是非常难以追踪和调试的。</li>
+</ul>
+<h4 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h4><ul>
+<li>考虑到使用rust的同学不是很多，有需要的同学可以直接 <a target="_blank" rel="noopener" href="https://os.phil-opp.com/zh-CN/paging-introduction/#ju-ti-shi-xian">跳转到这里</a></li>
+</ul>
 
     </div>
 
@@ -306,16 +537,16 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#fixme"><span class="nav-number">1.</span> <span class="nav-text">fixme:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%96%91%E9%97%AE%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">疑问？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug"><span class="nav-number">3.</span> <span class="nav-text">Debug</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">操作系统下的内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4"><span class="nav-number">1.1.</span> <span class="nav-text">内存保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5"><span class="nav-number">1.2.</span> <span class="nav-text">内存分段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-number">1.2.1.</span> <span class="nav-text">虚拟内存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%A2%8E%E7%89%87"><span class="nav-number">1.2.2.</span> <span class="nav-text">内存碎片</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%A1%B5"><span class="nav-number">1.3.</span> <span class="nav-text">内存分页</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BD%9C%E5%9C%A8%E7%A2%8E%E7%89%87"><span class="nav-number">1.3.1.</span> <span class="nav-text">潜在碎片</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8-Page-Table"><span class="nav-number">1.3.2.</span> <span class="nav-text">页表 Page Table</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">多级页表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x86_64-paging"><span class="nav-number">1.4.</span> <span class="nav-text">x86_64中的分页</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%8C%83%E4%BE%8B"><span class="nav-number">1.4.1.</span> <span class="nav-text">地址转换范例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B5%E8%A1%A8%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.4.2.</span> <span class="nav-text">页表格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E5%90%8E%E5%A4%87%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%88TLB%EF%BC%89"><span class="nav-number">1.4.3.</span> <span class="nav-text">地址转换后备缓冲区（TLB）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="nav-number">1.4.4.</span> <span class="nav-text">实现细节</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="BrahmaMantra"
-      src="https://github.com/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
+      src="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
   <p class="site-author-name" itemprop="name">BrahmaMantra</p>
-  <div class="site-description" itemprop="description">月明帘下转身难</div>
+  <div class="site-description" itemprop="description">功利主义的导向，让我们忘记生命本身就是一场旅程</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -328,6 +559,14 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/BrahmaMantra/BrahmaMantra.github.io/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
 
 
@@ -356,7 +595,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">BrahmaMantra</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
         
@@ -382,7 +621,7 @@
 <script src="/BrahmaMantra/BrahmaMantra.github.io/js/motion.js"></script>
 
 
-<script src="/BrahmaMantra/BrahmaMantra.github.io/js/schemes/muse.js"></script>
+<script src="/BrahmaMantra/BrahmaMantra.github.io/js/schemes/pisces.js"></script>
 
 
 <script src="/BrahmaMantra/BrahmaMantra.github.io/js/next-boot.js"></script>
