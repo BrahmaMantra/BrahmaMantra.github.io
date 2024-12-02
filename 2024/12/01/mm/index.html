@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"github.com","root":"/BrahmaMantra/BrahmaMantra.github.io/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="内容借鉴自blogos,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。 对内存管理概念有基础的同学可以跳转到 x86_64 中的分页  操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬">
+  <meta name="description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/index.html">
+<meta property="og:title" content="浅谈内存管理（以linux x86为例）">
+<meta property="og:url" content="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="内容借鉴自blogos,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。 对内存管理概念有基础的同学可以跳转到 x86_64 中的分页  操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬">
+<meta property="og:description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center">
@@ -39,12 +39,12 @@
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/1f20150cc5a3464986fc5e09e597798c.png#pic_center">
 <meta property="og:image" content="https://i-blog.csdnimg.cn/direct/64e5878e33f74d669954e9ac18212152.png#pic_center">
 <meta property="article:published_time" content="2024-12-01T09:36:02.407Z">
-<meta property="article:modified_time" content="2024-12-02T04:43:39.526Z">
+<meta property="article:modified_time" content="2024-12-02T04:46:14.371Z">
 <meta property="article:author" content="BrahmaMantra">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
 
-<link rel="canonical" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/">
+<link rel="canonical" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/">
 
 
 <script id="page-configurations">
@@ -57,7 +57,7 @@
   };
 </script>
 
-  <title> | Hexo</title>
+  <title>浅谈内存管理（以linux x86为例） | Hexo</title>
   
 
 
@@ -167,7 +167,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
@@ -180,7 +180,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          浅谈内存管理（以linux x86为例）
         </h1>
 
         <div class="post-meta">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-02 12:43:39" itemprop="dateModified" datetime="2024-12-02T12:43:39+08:00">2024-12-02</time>
+                <time title="Modified: 2024-12-02 12:46:14" itemprop="dateModified" datetime="2024-12-02T12:46:14+08:00">2024-12-02</time>
               </span>
 
           
@@ -211,11 +211,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <ul>
-<li>内容借鉴自<a target="_blank" rel="noopener" href="https://os.phil-opp.com/zh-CN/paging-introduction/">blogos</a>,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。</li>
-<li>对内存管理概念有基础的同学可以跳转到<a href="#x86_64-paging"> x86_64 中的分页</a></li>
-</ul>
-<h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
+        <h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
 <li>操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用<strong>段页式</strong>进行管理。</li>
 </ul>
 <h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想</p>

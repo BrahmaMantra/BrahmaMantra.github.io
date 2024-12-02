@@ -152,7 +152,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-cn">
-    <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/BrahmaMantra/BrahmaMantra.github.io/images/touxiang.png">
@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/" class="post-title-link" itemprop="url">浅谈内存管理（以linux x86为例）</a>
         </h2>
 
         <div class="post-meta">
@@ -183,7 +183,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-02 12:43:39" itemprop="dateModified" datetime="2024-12-02T12:43:39+08:00">2024-12-02</time>
+                <time title="Modified: 2024-12-02 12:46:14" itemprop="dateModified" datetime="2024-12-02T12:46:14+08:00">2024-12-02</time>
               </span>
 
           
@@ -197,11 +197,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <ul>
-<li>内容借鉴自<a target="_blank" rel="noopener" href="https://os.phil-opp.com/zh-CN/paging-introduction/">blogos</a>,一个基于rust的简单操作系统的实现，对rust或操作系统感兴趣的同学十分建议看一下。</li>
-<li>对内存管理概念有基础的同学可以跳转到<a href="#x86_64-paging"> x86_64 中的分页</a></li>
-</ul>
-<h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
+          <h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
 <li>操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用<strong>段页式</strong>进行管理。</li>
 </ul>
 <h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想</p>
@@ -225,10 +221,23 @@
 <li><p>该机制的另一个优点就是让程序不局限于特定的某一段物理内存，而是依赖另一套虚拟内存地址，从而让操作系统在不重编译程序的前提下使用全部的内存区域。</p>
 </li>
 </ul>
-<h4 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h4>
+<h4 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h4><ul>
+<li><p>虚拟内存机制已经让内存分段机制十分强大，但也有碎片化的问题，请看，如果我们同时执行三个程序实例的话：<img src="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>在不能重叠使用的前提下，我们完全找不到足够的地方来容纳第三个程序，因为剩余的连续空间已经不够了。此时的问题在于，我们需要使用 连续 的内存区域，不要将那些中间的空白部分白白浪费掉。</p>
+</li>
+<li><p>比较合适的办法就是暂停程序运行，将内存块移动到一个连续区间内，更新段基址信息，然后恢复程序运行：</p>
+</li>
+<li><p><img src="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center" alt="在这里插入图片描述"></p>
+</li>
+<li><p>但这样做也有一些问题，内存整理程序往往需要拷贝一段比较大的内存，这会很大程度上影响性能，但是又必须在碎片问题变得过于严重前完成这个操作。同时由于其消耗时间的不可预测性，程序很可能会随机挂起，甚至在用户视角下失去响应。</p>
+</li>
+<li><p>这也是大多数系统放弃内存分段技术的原因之一，事实上，该技术已经被x86平台的64位模式所抛弃，因为<strong>内存分页技术</strong>已经完全解决了碎片化问题。</p>
+</li>
+</ul>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/fixme/#more" rel="contents">
+              <a class="btn" href="/BrahmaMantra/BrahmaMantra.github.io/2024/12/01/mm/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
