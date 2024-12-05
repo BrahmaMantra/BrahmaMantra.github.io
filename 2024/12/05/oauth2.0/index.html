@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"brahmamantra.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="OAuth2.0是什么官方介绍是： OAuth 2.0授权框架允许第三方应用程序通过协调资源所有者和HTTP服务之间的审批交互，或允许第三方应用程序自己获得访问权限，从而获得对HTTP服务的有限访问。也就是授权别人(client)访问我们的资源。  The OAuth 2.0 authorization framework enables a third-partyapplication to o">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oauth2.0简介">
+<meta property="og:url" content="https://brahmamantra.github.io/2024/12/05/oauth2.0/index.html">
+<meta property="og:site_name" content="BrahmaMantra&#39;s Blog">
+<meta property="og:description" content="OAuth2.0是什么官方介绍是： OAuth 2.0授权框架允许第三方应用程序通过协调资源所有者和HTTP服务之间的审批交互，或允许第三方应用程序自己获得访问权限，从而获得对HTTP服务的有限访问。也就是授权别人(client)访问我们的资源。  The OAuth 2.0 authorization framework enables a third-partyapplication to o">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://brahmamantra.github.io/images/image-1.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/image-3.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/image-4.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/image-5.png">
+<meta property="article:published_time" content="2024-12-05T07:00:26.980Z">
+<meta property="article:modified_time" content="2024-12-05T08:22:36.593Z">
+<meta property="article:author" content="BrahmaMantra">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://brahmamantra.github.io/images/image-1.png">
+
+<link rel="canonical" href="https://brahmamantra.github.io/2024/12/05/oauth2.0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Oauth2.0简介 | BrahmaMantra's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BrahmaMantra's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/05/oauth2.0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.png">
+      <meta itemprop="name" content="BrahmaMantra">
+      <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BrahmaMantra's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Oauth2.0简介
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-12-05 15:00:26 / Modified: 16:22:36" itemprop="dateCreated datePublished" datetime="2024-12-05T15:00:26+08:00">2024-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="OAuth2-0是什么"><a href="#OAuth2-0是什么" class="headerlink" title="OAuth2.0是什么"></a>OAuth2.0是什么</h2><p>官方介绍是： OAuth 2.0授权框架允许第三方应用程序通过协调资源所有者和HTTP服务之间的审批交互，或允许第三方应用程序自己获得访问权限，从而获得对HTTP服务的有限访问。也就是授权别人(client)访问我们的资源。</p>
+<ul>
+<li>The OAuth 2.0 authorization framework enables a third-party<br>application to obtain limited access to an HTTP service, either on<br>behalf of a resource owner by orchestrating an approval interaction<br>between the resource owner and the HTTP service, or by allowing the<br>third-party application to obtain access on its own behalf.  This<br>specification replaces and obsoletes the OAuth 1.0 protocol described<br>in RFC 5849.</li>
+</ul>
+<p>我的理解就是，OAuth 2.0 是一种开放标准授权协议，站在资源所有者（比如设想自己在开发微信）的角度，允许第三方应用程序（比如某个可以用微信扫码登录的论文查重网站0.0）在资源所有者的许可下，访问资源服务器上的受保护资源（只能访问特定资源，隐私资源比如聊天记录肯定是不能给你的），而无需暴露资源所有者的凭据（不给你微信密码）。OAuth 2.0 主要用于 Web 应用程序、移动应用程序和桌面应用程序的授权。</p>
+<h3 id="第三方应用程序-client-是什么？"><a href="#第三方应用程序-client-是什么？" class="headerlink" title="第三方应用程序(client)是什么？"></a>第三方应用程序(client)是什么？</h3><pre><code>为了通俗易懂，在这个文档中我会用论文查重网站代指第三方应用程序
+</code></pre>
+<p>登录论文查重网站可以输入账号密码登录，也可以选择微信登录，微信扫码确认后，就登录了论文查重网站。论文查重网站通过微信认证的方式实现了自身的认证登录。这个论文查重网站就是client的角色（Role）。</p>
+<h3 id="什么时候需要让别人-client-访问我们的资源？"><a href="#什么时候需要让别人-client-访问我们的资源？" class="headerlink" title="什么时候需要让别人(client)访问我们的资源？"></a>什么时候需要让别人(client)访问我们的资源？</h3><p>最常见的是微信授权登录，对client来说，是用户授权client拿到用户在微信上的信息，比如性别，唯一id。</p>
+<h3 id="我们怎么才能做到授权给别人访问我们的资源？"><a href="#我们怎么才能做到授权给别人访问我们的资源？" class="headerlink" title="我们怎么才能做到授权给别人访问我们的资源？"></a>我们怎么才能做到授权给别人访问我们的资源？</h3><p>我们自己怎么获取自己的资源？我们<strong>登录</strong>后就可以获取到自己的账号信息等资源了。那么怎么给到别人？直接把我们的账号密码给第三者<strong>太不安全了！</strong>。一个是自己的账号密码存在<strong>泄露</strong>的风险，一个是自己的账号权限太大，万一被别人删除了或者看到了不该看到的东西怎么办。在使用阿里云的时候，我们可以给自己的账号开子账号，给子账号一些权限访问哪些服务(授权太复杂了)，这样我们就可以达到最初的目的了： 让别人安全的访问我们的资源。</p>
+<p>OAuth通过引入授权层并将client的角色与资源所有者的角色分离, 并且给client单独的凭证(access_token)，client通过access_token获取有限的资源。</p>
+<ul>
+<li>也就是说，所谓access_token对于第三方client来说，就相当于是访问微信的密码，只不过只能访问被授权的一些信息而已</li>
+</ul>
+<h3 id="主要角色"><a href="#主要角色" class="headerlink" title="主要角色"></a>主要角色</h3><h4 id="资源所有者-Resource-Owner-："><a href="#资源所有者-Resource-Owner-：" class="headerlink" title="资源所有者 (Resource Owner)："></a>资源所有者 (Resource Owner)：</h4><ul>
+<li>通常就是用户，比如登录的用户，拥有受保护资源并授予访问权限。</li>
+</ul>
+<h4 id="资源服务器-Resource-Server-："><a href="#资源服务器-Resource-Server-：" class="headerlink" title="资源服务器 (Resource Server)："></a>资源服务器 (Resource Server)：</h4><ul>
+<li>资源服务&#x2F;提供资源的服务。作为存储受保护资源的服务器，使用access_token来验证和提供资源。（比如微信api，通过<strong>access_token</strong>调用它可以获取到用户的性别等信息）。</li>
+</ul>
+<h4 id="客户端-Client-："><a href="#客户端-Client-：" class="headerlink" title="客户端 (Client)："></a>客户端 (Client)：</h4><p>第三方应用程序，代表资源所有者请求访问受保护资源。比如论文查重网站，他要你的微信id</p>
+<h4 id="授权服务器-Authorization-Server-："><a href="#授权服务器-Authorization-Server-：" class="headerlink" title="授权服务器 (Authorization Server)："></a>授权服务器 (Authorization Server)：</h4><p>颁发access_token的服务器，验证资源所有者的身份并授予访问权限。</p>
+<p>乍一看可能有点迷乱。站在登录用户的角度，简单的分为3个阵营: 用户本身(resource owner), 用户要登录的应用(client，也就是论文查重网站), 用户的资源(resource server and authrization server，也就是微信里的东西). authorization server和resource server是一体的，一家的，比如都是微信的。这样清晰一些。只是对于微信内部，个人信息，朋友圈，公众号，小程序啥的，资源挺多，相当于多个resource server, 内部就分成了authorization server和多个resource server.  </p>
+<p>搞清楚这里面的角色后，再来看协议的流程。</p>
+<h3 id="OAuth2-0的协议流程"><a href="#OAuth2-0的协议流程" class="headerlink" title="OAuth2.0的协议流程"></a>OAuth2.0的协议流程</h3><pre><code>在这个过程中，我们要站在client的角度考虑，因为我们日常开发的时候往往是要调微信api，而不是在微信(Resource Server)的角度考虑保护资源。
+</code></pre>
+<ol>
+<li>client找用户(resource owner)请求授权，说你得让我获取你的微信昵称，然后用户就看到微信授权页面(authorization server)，</li>
+</ol>
+<ul>
+<li>在这个例子来说就是论文查重网站给你个二维码，让你扫码，要你给个code给它去微信进行认证</li>
+</ul>
+<ol start="2">
+<li>用户扫码后，微信就会给client一个临时授权code（对应图上的Grant）。</li>
+</ol>
+<ul>
+<li>在这个例子来说就是用户在手机微信上扫了个码（但是还没点确认喔），代表把code传给论文查重网站了，这样它就可以拿着code去找微信认证了</li>
+</ul>
+<ol start="3">
+<li>client拿着上一步得到的授权code去找authorization server想要换一个access_token。</li>
+</ol>
+<ul>
+<li>在本例中就是论文查重网站到微信的认证server里要一个access_token</li>
+<li>再次强调，这个access_token很类似密码，不是用户的微信密码，而是微信给你的一个临时的认证码，在不同请求中返回的这个access_token都是完全不同的，并且code和access_token会定时刷新，这是为了防止access_token泄露造成的隐患，access_token的用处就是访问特定受保护的资源</li>
+</ul>
+<ol start="4">
+<li>authorization server认证了client的参数，确认后，给client返回access_token。</li>
+</ol>
+<ul>
+<li>在本例中，就是微信认证系统认证了你这个access_token确实是用户给的，不是你胡编乱造的，不然不就麻烦大了吗！！</li>
+</ul>
+<ol start="5">
+<li>client拿access_token去获取受保护的信息，比如获取用户昵称，头像。</li>
+</ol>
+<ul>
+<li>在本例中，论文查重网站拿着access_token去登录微信咯！（不是密码登录），这时候向用户弹出是否确认，登录ip是否安全等，在用户点击确认登录后进行到下一个阶段</li>
+</ul>
+<ol start="6">
+<li>Resource Server把受保护的资源返回，client如愿以偿。舒服了~~</li>
+</ol>
+<p><img src="/images/image-1.png" alt="alt text"></p>
+<h3 id="OAuth2-0授权发放模式"><a href="#OAuth2-0授权发放模式" class="headerlink" title="OAuth2.0授权发放模式"></a>OAuth2.0授权发放模式</h3><p>授权发放模式是指client获取access_token的方式,OAuth 2.0 定义了四种授权方式（授权流程），每种方式适用于不同的场景：</p>
+<h4 id="授权码授权-Authorization-Code-Grant-："><a href="#授权码授权-Authorization-Code-Grant-：" class="headerlink" title="授权码授权 (Authorization Code Grant)："></a>授权码授权 (Authorization Code Grant)：</h4><p>最常用的授权方式，和上文出入不大，适用于服务器端应用程序。  </p>
+<p>流程：</p>
+<ol>
+<li>client将用户重定向到授权服务器，用户登录并授权。</li>
+<li>授权服务器返回授权码给client。</li>
+<li>client使用授权码向授权服务器请求访问令牌。</li>
+<li>授权服务器返回访问令牌和刷新令牌给client。</li>
+</ol>
+<ul>
+<li><p>在下面例子中，首先，石墨文档(client)需要在微信开放平台(authorization)注册，获取appId和appSecret. 这组凭证是石墨自己访问微信开放平台的。access_token则是代表用户本人，注意区别。<br><img src="/images/image-3.png" alt="alt text"></p>
+</li>
+<li><p>微信用户通过浏览器访问了石墨文档，然后登陆页，然后点了微信登录按钮<br>这时候，浏览器请求石墨微信登录回调地址，石墨后台返回302，response附属location. 浏览器重定向跳转到微信二维码认证页面。<br><img src="/images/image-4.png" alt="alt text"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://open.weixin.qq.com/connect/qrconnect?appid=wx5a67899f4af8b0b1&amp;redirect_uri=https%3A%2F%2Fshimo.im%2Flizard-api%2Fauth%2Fwechat%2Flogin_callback&amp;response_type=code&amp;scope=snsapi_login&amp;state=740a608f-23b4-4abd-b941-e13d2b5c0dbe#wechat_redirect</span><br></pre></td></tr></table></figure>
+<p>注意几个参数：</p>
+<p>  appid: 石墨文档作为client在微信开发平台的凭证id<br>  redirect_uri: 认证通过后，微信开放平台添加一个code参数到这个url后面，然后浏览器重定向到这个url。这个url是石墨文档后台接收code的接口。<br>  response_type: code。固定<br>  scope: 授权范围，想获取用户哪些资料的api。网页登录为snsapi_login<br>  state: 这个是防刷的，防止csrf跨站请求伪造攻击。微信认证成功后，回调的时候会原样返回给石墨(client)。如果没这个，client接收参数就只有code，别人就是随意伪造碰撞code。而石墨生成了一次性token作为state，回调接口只有一次有效期。这里石墨用的uuid.</p>
+</li>
+</ul>
+<p>这个回调地址code就是微信开放平台(authorization server)颁发给石墨文档(client)的code。</p>
+<p>石墨文档后台接收到code和state后，校验state是否有效，然后拿code和appId,appSecret去访问微信接口获取用户信息。这一步是在石墨文档后台进行的。浏览器看不到access_token. 而对于上一步生成的code，即便有人拿到code，应该已经失效了。code和state都是一次性的有效期。这样保证了access_token的安全性</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&amp;secret=SECRET&amp;code=CODE&amp;grant_type=authorization_code</span><br><span class="line"></span><br><span class="line">返回：</span><br><span class="line">&#123; </span><br><span class="line"><span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;ACCESS_TOKEN&quot;</span>, </span><br><span class="line"><span class="string">&quot;expires_in&quot;</span>:7200, </span><br><span class="line"><span class="string">&quot;refresh_token&quot;</span>:<span class="string">&quot;REFRESH_TOKEN&quot;</span>,</span><br><span class="line"><span class="string">&quot;openid&quot;</span>:<span class="string">&quot;OPENID&quot;</span>, </span><br><span class="line"><span class="string">&quot;scope&quot;</span>:<span class="string">&quot;SCOPE&quot;</span>,</span><br><span class="line"><span class="string">&quot;unionid&quot;</span>: <span class="string">&quot;o6_bmasdasdsad6_2sgVt7hMZOPfL&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>石墨文档获取到用户唯一id后，根据后台用户账号的绑定关系，确认当前登录用户登录</p>
+<h3 id="隐式授权-Implicit-Grant-："><a href="#隐式授权-Implicit-Grant-：" class="headerlink" title="隐式授权 (Implicit Grant)："></a>隐式授权 (Implicit Grant)：</h3><p>Implicit翻译是隐藏式，这种针对纯web前端应用，没有后台，就没办法像上面一样了，令牌只能放在前端。这种也叫client side，又称为User Agent Flow，先说具体用法。</p>
+<p>client直接请求authorization server获取access_token. 请求参数是client id和redirect url, 最后认证返回后拼接#access_code. 类似下图。<br><img src="/images/image-5.png" alt="alt text"><br>由于access_token网络传输，并不安全，很少使用这种方案。  </p>
+<ol>
+<li><p>请求认证的url参数： clientId, redirectUrI, Scope,state</p>
+<p> client_id: 注册应用的 id，比如石墨文档在qq注册应用的appid<br> redirect_uri: 认证成功后要回调的地址，这个要和注册的时候一致<br> response_type: token<br> state: 同样的一次性随机数，会原样返回给client，防止csrf攻击。</p>
+</li>
+<li><p>认证成功后，回调地址中的access_token<br>qq认证成功后的示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://graph.qq.com/demo/index.jsp?#access_token=FE04************************CCE2&amp;expires_in=7776000&amp;state=<span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>可以看到参数access_token是通过#传递的。这里涉及一个叫中间人攻击的安全问题，见<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2019/04/oauth-grant-types.html">这里</a>。</p>
+<p> 注意，令牌access_token的位置是 URL 锚点（fragment），而不是查询字符串（querystring），这是因为 OAuth 2.0 允许跳转网址是 HTTP 协议，因此存在”中间人攻击”的风险，而浏览器跳转时，锚点不会发到服务器，就减少了泄漏令牌的风险</p>
+</li>
+</ol>
+<h3 id="password"><a href="#password" class="headerlink" title="password"></a>password</h3><p>password需要用户把微信账号和密码给client，client拿着去微信换token，这种放弃看了，不可能给的，微信也不支持。</p>
+<h3 id="client"><a href="#client" class="headerlink" title="client"></a>client</h3><p>这种就是纯后台方案。client拿着client_id和secret去换access_token。通常就是我们后台服务调用的时候用到。比如使用aws的s3或者阿里云的oss上传文件。我们需要通过ak，sk认证，获取一个token，拿token去上传文件。这个流程写起来还挺麻烦的，一般都会封装好客户端给我们用。这里就不涉及用户了，只是客户端自己的认证了。</p>
+<h3 id="customize"><a href="#customize" class="headerlink" title="customize"></a>customize</h3><p>自定义，我们也可以username + password登录走OAuth2.0校验。只是没client，或者说每个登录用户类似client。登录后返回access_token, 用户可以访问其他资源。</p>
+<h2 id="更新令牌"><a href="#更新令牌" class="headerlink" title="更新令牌"></a>更新令牌</h2><p>前面讲的4个授权方式，都是为了获取access_token。返回格式类似微信的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123; </span><br><span class="line"><span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;ACCESS_TOKEN&quot;</span>, </span><br><span class="line"><span class="string">&quot;expires_in&quot;</span>:7200, </span><br><span class="line"><span class="string">&quot;refresh_token&quot;</span>:<span class="string">&quot;REFRESH_TOKEN&quot;</span>,</span><br><span class="line"><span class="string">&quot;openid&quot;</span>:<span class="string">&quot;OPENID&quot;</span>, </span><br><span class="line"><span class="string">&quot;scope&quot;</span>:<span class="string">&quot;SCOPE&quot;</span>,</span><br><span class="line"><span class="string">&quot;unionid&quot;</span>: <span class="string">&quot;o6_bmasdasdsad6_2sgVt7hMZOPfL&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>openid,unionid并不是必须的，这是微信认证用户的唯一的id。在微信的设计中，</p>
+<pre><code>access_token: 接口调用凭证，用来获取资源信息，比如用户的头像，昵称等。超时时间很短。微信设定为2h。
+expire_in: access_token的超时时间，单位秒
+refresh_token: 用户刷新access_token用的token。超时时间比较久。微信设定超时为30天，失效后需要用户重新授权。
+</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">https://api.weixin.qq.com/sns/oauth2/refresh_token?appid=APPID&amp;grant_type=refresh_token&amp;refresh_token=REFRESH_TOKEN</span><br><span class="line">返回</span><br><span class="line">&#123; </span><br><span class="line"><span class="string">&quot;access_token&quot;</span>:<span class="string">&quot;ACCESS_TOKEN&quot;</span>, </span><br><span class="line"><span class="string">&quot;expires_in&quot;</span>:7200, </span><br><span class="line"><span class="string">&quot;refresh_token&quot;</span>:<span class="string">&quot;REFRESH_TOKEN&quot;</span>, </span><br><span class="line"><span class="string">&quot;openid&quot;</span>:<span class="string">&quot;OPENID&quot;</span>, </span><br><span class="line"><span class="string">&quot;scope&quot;</span>:<span class="string">&quot;SCOPE&quot;</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>请求刷新token：</p>
+<pre><code>appid: client id,石墨注册在微信平台的id
+grant_type: refresh_token固定
+refresh_token: 上一步获取到的token
+</code></pre>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>官方： <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc6749">https://tools.ietf.org/html/rfc6749</a></p>
+<p>微信登录功能文档： <a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html">https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html</a></p>
+<p>qq互联OAuth2.0文档： <a target="_blank" rel="noopener" href="https://wiki.connect.qq.com/oauth2-0%e7%ae%80%e4%bb%8b">https://wiki.connect.qq.com/oauth2-0%e7%ae%80%e4%bb%8b</a></p>
+<p>Ryan.Miao： <a target="_blank" rel="noopener" href="https://www.cnblogs.com/woshimrf/p/OAuth2.html">https://www.cnblogs.com/woshimrf/p/OAuth2.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/12/03/PAT/" rel="prev" title="DragonOS虚拟化正确设置PAT经历">
+      <i class="fa fa-chevron-left"></i> DragonOS虚拟化正确设置PAT经历
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth2-0%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">OAuth2.0是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F-client-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">第三方应用程序(client)是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E8%AE%A9%E5%88%AB%E4%BA%BA-client-%E8%AE%BF%E9%97%AE%E6%88%91%E4%BB%AC%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="nav-number">1.2.</span> <span class="nav-text">什么时候需要让别人(client)访问我们的资源？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E6%80%8E%E4%B9%88%E6%89%8D%E8%83%BD%E5%81%9A%E5%88%B0%E6%8E%88%E6%9D%83%E7%BB%99%E5%88%AB%E4%BA%BA%E8%AE%BF%E9%97%AE%E6%88%91%E4%BB%AC%E7%9A%84%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="nav-number">1.3.</span> <span class="nav-text">我们怎么才能做到授权给别人访问我们的资源？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E8%A7%92%E8%89%B2"><span class="nav-number">1.4.</span> <span class="nav-text">主要角色</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%89%80%E6%9C%89%E8%80%85-Resource-Owner-%EF%BC%9A"><span class="nav-number">1.4.1.</span> <span class="nav-text">资源所有者 (Resource Owner)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E6%9C%8D%E5%8A%A1%E5%99%A8-Resource-Server-%EF%BC%9A"><span class="nav-number">1.4.2.</span> <span class="nav-text">资源服务器 (Resource Server)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-Client-%EF%BC%9A"><span class="nav-number">1.4.3.</span> <span class="nav-text">客户端 (Client)：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E6%9C%8D%E5%8A%A1%E5%99%A8-Authorization-Server-%EF%BC%9A"><span class="nav-number">1.4.4.</span> <span class="nav-text">授权服务器 (Authorization Server)：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OAuth2-0%E7%9A%84%E5%8D%8F%E8%AE%AE%E6%B5%81%E7%A8%8B"><span class="nav-number">1.5.</span> <span class="nav-text">OAuth2.0的协议流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OAuth2-0%E6%8E%88%E6%9D%83%E5%8F%91%E6%94%BE%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.6.</span> <span class="nav-text">OAuth2.0授权发放模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%88%E6%9D%83%E7%A0%81%E6%8E%88%E6%9D%83-Authorization-Code-Grant-%EF%BC%9A"><span class="nav-number">1.6.1.</span> <span class="nav-text">授权码授权 (Authorization Code Grant)：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E6%8E%88%E6%9D%83-Implicit-Grant-%EF%BC%9A"><span class="nav-number">1.7.</span> <span class="nav-text">隐式授权 (Implicit Grant)：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#password"><span class="nav-number">1.8.</span> <span class="nav-text">password</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#client"><span class="nav-number">1.9.</span> <span class="nav-text">client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#customize"><span class="nav-number">1.10.</span> <span class="nav-text">customize</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E4%BB%A4%E7%89%8C"><span class="nav-number">2.</span> <span class="nav-text">更新令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="BrahmaMantra"
+      src="/images/touxiang.png">
+  <p class="site-author-name" itemprop="name">BrahmaMantra</p>
+  <div class="site-description" itemprop="description">功利主义的导向，让我们忘记生命本身就是一场旅程</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2033552517@qq.com" title="E-Mail → 2033552517@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrahmaMantra</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

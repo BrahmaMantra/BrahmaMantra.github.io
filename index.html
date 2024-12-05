@@ -152,6 +152,157 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/05/oauth2.0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.png">
+      <meta itemprop="name" content="BrahmaMantra">
+      <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BrahmaMantra's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/05/oauth2.0/" class="post-title-link" itemprop="url">Oauth2.0简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-12-05 15:00:26 / Modified: 16:22:36" itemprop="dateCreated datePublished" datetime="2024-12-05T15:00:26+08:00">2024-12-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="OAuth2-0是什么"><a href="#OAuth2-0是什么" class="headerlink" title="OAuth2.0是什么"></a>OAuth2.0是什么</h2><p>官方介绍是： OAuth 2.0授权框架允许第三方应用程序通过协调资源所有者和HTTP服务之间的审批交互，或允许第三方应用程序自己获得访问权限，从而获得对HTTP服务的有限访问。也就是授权别人(client)访问我们的资源。</p>
+<ul>
+<li>The OAuth 2.0 authorization framework enables a third-party<br>application to obtain limited access to an HTTP service, either on<br>behalf of a resource owner by orchestrating an approval interaction<br>between the resource owner and the HTTP service, or by allowing the<br>third-party application to obtain access on its own behalf.  This<br>specification replaces and obsoletes the OAuth 1.0 protocol described<br>in RFC 5849.</li>
+</ul>
+<p>我的理解就是，OAuth 2.0 是一种开放标准授权协议，站在资源所有者（比如设想自己在开发微信）的角度，允许第三方应用程序（比如某个可以用微信扫码登录的论文查重网站0.0）在资源所有者的许可下，访问资源服务器上的受保护资源（只能访问特定资源，隐私资源比如聊天记录肯定是不能给你的），而无需暴露资源所有者的凭据（不给你微信密码）。OAuth 2.0 主要用于 Web 应用程序、移动应用程序和桌面应用程序的授权。</p>
+<h3 id="第三方应用程序-client-是什么？"><a href="#第三方应用程序-client-是什么？" class="headerlink" title="第三方应用程序(client)是什么？"></a>第三方应用程序(client)是什么？</h3><pre><code>为了通俗易懂，在这个文档中我会用论文查重网站代指第三方应用程序
+</code></pre>
+<p>登录论文查重网站可以输入账号密码登录，也可以选择微信登录，微信扫码确认后，就登录了论文查重网站。论文查重网站通过微信认证的方式实现了自身的认证登录。这个论文查重网站就是client的角色（Role）。</p>
+<h3 id="什么时候需要让别人-client-访问我们的资源？"><a href="#什么时候需要让别人-client-访问我们的资源？" class="headerlink" title="什么时候需要让别人(client)访问我们的资源？"></a>什么时候需要让别人(client)访问我们的资源？</h3><p>最常见的是微信授权登录，对client来说，是用户授权client拿到用户在微信上的信息，比如性别，唯一id。</p>
+<h3 id="我们怎么才能做到授权给别人访问我们的资源？"><a href="#我们怎么才能做到授权给别人访问我们的资源？" class="headerlink" title="我们怎么才能做到授权给别人访问我们的资源？"></a>我们怎么才能做到授权给别人访问我们的资源？</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/05/oauth2.0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/03/PAT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/touxiang.png">
+      <meta itemprop="name" content="BrahmaMantra">
+      <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BrahmaMantra's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/12/03/PAT/" class="post-title-link" itemprop="url">DragonOS虚拟化正确设置PAT经历</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-12-03 14:16:50 / Modified: 14:35:55" itemprop="dateCreated datePublished" datetime="2024-12-03T14:16:50+08:00">2024-12-03</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>前置内容参考：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/aoaoblogs/archive/2010/12/26/1917206.html">这里</a></p>
+<h3 id="前置内容"><a href="#前置内容" class="headerlink" title="前置内容"></a>前置内容</h3><p>在当前的处理器中，memory type是根据PAT和MTTR两者来选择的, 具体的映射关系见IA32手册第三卷的10.5.2.2 Selecting Memory Types for Pentium III and More Recent Processor Families</p>
+<p>对于MTRRs和PAT</p>
+<p>MTRRs: The memory type range registers (MTRRs) provide a mechanism for associating the memory types with physical-address ranges in system memory.</p>
+<p>PAT: The Page Attribute Table (PAT) extends the IA-32 architecture’s page-table format to allow memory types to be assigned to regions of physical memory based on linear address mappings.      </p>
+<p>简单来说PAT是作用于页表上的，基于虚拟地址的。而MTRRs是作用于物理地址上的.</p>
+<p>这里只简单说一下PAT的规则</p>
+<p>IA32_CR_PAT MSR寄存器是位于277H偏移地址的MSR寄存器，它是一个64bits可编程的寄存器，包含8个页属性域，PA0~PA7,如下图</p>
+<ul>
+<li><img src="/image.png" alt="alt text"></li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/12/03/PAT/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/01/mm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -183,7 +334,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-02 13:09:21" itemprop="dateModified" datetime="2024-12-02T13:09:21+08:00">2024-12-02</time>
+                <time title="Modified: 2024-12-05 16:22:37" itemprop="dateModified" datetime="2024-12-05T16:22:37+08:00">2024-12-05</time>
               </span>
 
           
@@ -207,73 +358,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/12/01/mm/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://brahmamantra.github.io/2024/12/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/touxiang.png">
-      <meta itemprop="name" content="BrahmaMantra">
-      <meta itemprop="description" content="功利主义的导向，让我们忘记生命本身就是一场旅程">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BrahmaMantra's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/12/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-12-01 16:34:08 / Modified: 18:35:38" itemprop="dateCreated datePublished" datetime="2024-12-01T16:34:08+08:00">2024-12-01</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/12/01/hello-world/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -361,7 +445,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -370,6 +454,9 @@
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2033552517@qq.com" title="E-Mail → 2033552517@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">

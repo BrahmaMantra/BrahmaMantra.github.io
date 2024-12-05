@@ -27,22 +27,22 @@
 <meta property="og:site_name" content="BrahmaMantra&#39;s Blog">
 <meta property="og:description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/8ed5cdec88884e5bb92d46885ca405cb.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/efb2807754d843119b8591cc47a977ba.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/e95ab187fa7f43cdae8967f9e2bceb1a.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/42cebfb8aa024d05ade285a50b117b5f.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/4c76b55820894eacb3e04f1417cda487.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/b7282ebfb9c1420299ca8ade1a08a2a6.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/1f20150cc5a3464986fc5e09e597798c.png#pic_center">
-<meta property="og:image" content="https://i-blog.csdnimg.cn/direct/64e5878e33f74d669954e9ac18212152.png#pic_center">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-1.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-2.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-3.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-4.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-5.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-6.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-7.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-8.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-9.png">
+<meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-10.png">
 <meta property="article:published_time" content="2024-12-01T09:36:02.407Z">
-<meta property="article:modified_time" content="2024-12-02T05:09:21.932Z">
+<meta property="article:modified_time" content="2024-12-05T08:22:37.323Z">
 <meta property="article:author" content="BrahmaMantra">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center">
+<meta name="twitter:image" content="https://brahmamantra.github.io/images/mm/image.png">
 
 <link rel="canonical" href="https://brahmamantra.github.io/2024/12/01/mm/">
 
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-02 13:09:21" itemprop="dateModified" datetime="2024-12-02T13:09:21+08:00">2024-12-02</time>
+                <time title="Modified: 2024-12-05 16:22:37" itemprop="dateModified" datetime="2024-12-05T16:22:37+08:00">2024-12-05</time>
               </span>
 
           
@@ -225,7 +225,7 @@
 </li>
 <li><p>比如同时执行两个相同的程序：</p>
 </li>
-<li><p><img src="https://i-blog.csdnimg.cn/direct/75dc26badf0248e3aad095a8d54f637a.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p><img src="/images/mm/image.png" alt="alt text"></p>
 </li>
 <li><p>如你所见，这就是两个相同程序的内存分配情况，两者具有不同的地址偏移量（即 段基址）。第一个程序实例的段基址为100，所以其虚拟地址范围0-150换算成物理地址就是100-250。第二个程序实例的段基址为300，所以其虚拟地址范围0-150换算成物理地址就是300-450。所以该机制允许程序共用同一套代码逻辑，使用同样的虚拟地址，并且不会干扰到彼此。</p>
 </li>
@@ -233,13 +233,15 @@
 </li>
 </ul>
 <h4 id="内存碎片"><a href="#内存碎片" class="headerlink" title="内存碎片"></a>内存碎片</h4><ul>
-<li><p>虚拟内存机制已经让内存分段机制十分强大，但也有碎片化的问题，请看，如果我们同时执行三个程序实例的话：<img src="https://i-blog.csdnimg.cn/direct/c050572df7df41f8af8583c6794b4bb3.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>虚拟内存机制已经让内存分段机制十分强大，但也有碎片化的问题，请看，如果我们同时执行三个程序实例的话：</p>
+</li>
+<li><p><img src="/images/mm/image-1.png" alt="alt text"></p>
 </li>
 <li><p>在不能重叠使用的前提下，我们完全找不到足够的地方来容纳第三个程序，因为剩余的连续空间已经不够了。此时的问题在于，我们需要使用 连续 的内存区域，不要将那些中间的空白部分白白浪费掉。</p>
 </li>
 <li><p>比较合适的办法就是暂停程序运行，将内存块移动到一个连续区间内，更新段基址信息，然后恢复程序运行：</p>
 </li>
-<li><p><img src="https://i-blog.csdnimg.cn/direct/d875a240d23d41b091eeffdbf9ccb129.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p><img src="/images/mm/image-2.png" alt="alt text"></p>
 </li>
 <li><p>但这样做也有一些问题，内存整理程序往往需要拷贝一段比较大的内存，这会很大程度上影响性能，但是又必须在碎片问题变得过于严重前完成这个操作。同时由于其消耗时间的不可预测性，程序很可能会随机挂起，甚至在用户视角下失去响应。</p>
 </li>
@@ -250,7 +252,7 @@
 <li>内存分页的思想依然是使用虚拟地址映射物理地址，但是其分配单位变成了固定长度的较小的内存区域。这些虚拟内存块被称为<strong>页 Page</strong>(大小通常为4K Bytes)，而其对应的物理内存则被称为<strong>页帧 Page Frame</strong>，每一Page都可以映射到一个对应的Page Frame中。这也就意味着我们可以将程序所使用的一大块内存区域打散到所有物理内存中(以4K，也就是Page Size为单位)，而不必分配一块连续的区域。</li>
 <li>其优势就在于，如果我们遇到上文中提到的内存碎片问题时，内存分页技术会这样解决它：</li>
 <li>例如我们将页的单位设置为50 Bytes，也就是说我们的每一个程序实例所使用的内存都被分割为三页。每一页都可以独立映射到一个页帧中，因此连续的虚拟内存并不一定需要对应连续的物理内存区域，因此也就无需进行内存碎片整理了。</li>
-<li><img src="https://i-blog.csdnimg.cn/direct/8ed5cdec88884e5bb92d46885ca405cb.png#pic_center" alt="在这里插入图片描述"></li>
+<li><img src="/images/mm/image-3.png" alt="alt text"></li>
 </ul>
 <h4 id="潜在碎片"><a href="#潜在碎片" class="headerlink" title="潜在碎片"></a>潜在碎片</h4><ul>
 <li>对比内存分段，内存分页选择用较多的较小且固定长度的内存区域代替较少的较大且长度不固定的内存区域。正因为如此，不会有页帧因为长度过小而产生内存碎片。</li>
@@ -260,7 +262,9 @@
 <h4 id="页表-Page-Table"><a href="#页表-Page-Table" class="headerlink" title="页表 Page Table"></a>页表 Page Table</h4><ul>
 <li><p>我们应当预见到，在操作系统开始运行后，会存在数以百万计的Page-&gt;Page Frame映射关系，这些映射关系需要存储在某个地方。分段技术可以为每个活动的内存区域都指定一个段寄存器，但是分页技术不行，因为其使用到的页的数量实在是太多了，远多于寄存器数量，所以分页技术采用了一种叫做<strong>页表</strong>的结构来存储映射信息。</p>
 </li>
-<li><p>以上面的应用场合为例，页表看起来是这样子的：<br><img src="https://i-blog.csdnimg.cn/direct/efb2807754d843119b8591cc47a977ba.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>以上面的应用场合为例，页表看起来是这样子的：</p>
+</li>
+<li><p><img src="/images/mm/image-4.png" alt="alt text"></p>
 </li>
 <li><p>我们可以看到每个程序实例都有其专有的页表，但当前正在活跃的页表指针会被存储到特定的CPU寄存器中，在 x86 架构中，该寄存器被称为<strong>CR3</strong>。操作系统的任务之一，就是在程序运行前，把当前所使用的页表指针推进对应的寄存器中。</p>
 </li>
@@ -272,13 +276,15 @@
 <h4 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h4><ul>
 <li><p>上文中的简单页表在较大的地址空间下会有个问题：太浪费内存了。打个比方，一个程序需要使用4个虚拟内存页 0、1_000_000、1_000_050 和 1_000_100：</p>
 </li>
-<li><p><img src="https://i-blog.csdnimg.cn/direct/e95ab187fa7f43cdae8967f9e2bceb1a.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p><img src="/images/mm/image-5.png" alt="alt text"></p>
 </li>
 <li><p>尽管它仅仅会使用4个页帧，但是页表中有百万级别的映射条目，而我们还不能释放那些空白的条目，因为这会对地址转换造成很大的风险（比如可能无法保证4号页依然对应4号页帧）。</p>
 </li>
 <li><p>我们可以使用<strong>两级页表</strong>来避免内存浪费，其基本思路就是对不同的地址区域使用不同的页表。地址区域和一级页表的映射关系被存储在一个被称为二级页表的额外表格中。</p>
 </li>
-<li><p>举个例子，我们先假设每个一级页表映射<strong>10_000B</strong>的内存空间，在上文所述的应用场合下，此时的页表结构看上去是这样的：<br><img src="https://i-blog.csdnimg.cn/direct/42cebfb8aa024d05ade285a50b117b5f.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>举个例子，我们先假设每个一级页表映射<strong>10_000B</strong>的内存空间，在上文所述的应用场合下，此时的页表结构看上去是这样的：</p>
+</li>
+<li><p><img src="/images/mm/image-6.png" alt="alt text"></p>
 </li>
 <li><p>虚拟地址中的页<strong>0</strong>位于第一个<strong>10,000</strong>字节的内存区域内，位于内存区域<strong>0</strong>内，对应一级页表<strong>T1</strong>。</p>
 </li>
@@ -303,7 +309,9 @@
 </li>
 <li><p>x86_64 平台使用4级页表，页大小为4KiB，无论层级，每个页表均具有512个条目，每个条目占用8字节，所以每个页表固定占用 512 * 8B &#x3D; 4KiB，正好占满一个内存页。</p>
 </li>
-<li><p>每一级的页表索引号都可以通过虚拟地址推导出来：<br><img src="https://i-blog.csdnimg.cn/direct/4c76b55820894eacb3e04f1417cda487.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>每一级的页表索引号都可以通过虚拟地址推导出来：</p>
+</li>
+<li><p><img src="/images/mm/image-7.png" alt="alt text"></p>
 </li>
 <li><p>我们可以看到，每个表索引号占据 9 个比特，这当然是有道理的，每个表都有 2^9 &#x3D; 512 个条目，低12位用来表示内存页的偏移量（2^12 bytes &#x3D; 4KiB，而上文提到页大小为4KiB）。第 48-64 位毫无用处，这也就意味着 x86_64 并非真正的 64 位，因为它实际上支持 48 位地址（当然，根据摩尔定律，以后肯定是能用上的QWQ）。</p>
 </li>
@@ -327,11 +335,15 @@
 </li>
 </ul>
 </li>
-<li><p>请看下图，这就是一个典型的地址转换过程的范例：（怕你们忘了，cr3 寄存器保存了当前正在使用的页全局目录PGD的物理地址。这个地址是多级页表转换过程的起点）<br><img src="https://i-blog.csdnimg.cn/direct/b7282ebfb9c1420299ca8ade1a08a2a6.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>请看下图，这就是一个典型的地址转换过程的范例：（怕你们忘了，cr3 寄存器保存了当前正在使用的页全局目录PGD的物理地址。这个地址是多级页表转换过程的起点）  </p>
+</li>
+<li><p><img src="/images/mm/image-8.png" alt="alt text"></p>
 </li>
 <li><p>在每一级的页表（除一级页表外）中，都存在着指向下一级页表的指针，1级页表则存放着直接指向页帧地址的指针。注意，这里的指针，都是指页表的<strong>物理地址</strong>！！，而非虚拟地址，否则CPU会因为需要进行额外的地址转换而陷入无限递归中。（因为一旦要从虚拟地址-&gt;物理地址，就要查页表，查页表还给你返回虚拟地址，又要你从虚拟地址-&gt;物理地址，那不就套娃了嘛0.0）</p>
 </li>
-<li><p>最终，寻址结果是上图中的两个蓝色区域，根据页表查询结果，它们的虚拟地址分别是 <strong>0x803FE7F000</strong> 和 <strong>0x803FE00000</strong>，那么让我们看一看当程序尝试访问内存地址 <strong>0x803FE7F5CE</strong> 时会发生什么事情。首先我们需要把地址转换为二进制，然后确定该地址所对应的页表索引和页偏移量：<br><img src="https://i-blog.csdnimg.cn/direct/1f20150cc5a3464986fc5e09e597798c.png#pic_center" alt="在这里插入图片描述"></p>
+<li><p>最终，寻址结果是上图中的两个蓝色区域，根据页表查询结果，它们的虚拟地址分别是 <strong>0x803FE7F000</strong> 和 <strong>0x803FE00000</strong>，那么让我们看一看当程序尝试访问内存地址 <strong>0x803FE7F5CE</strong> 时会发生什么事情。首先我们需要把地址转换为二进制，然后确定该地址所对应的页表索引和页偏移量：</p>
+</li>
+<li><p><img src="/images/mm/image-9.png" alt="alt text"></p>
 </li>
 <li><p>通过这些索引，我们就可以通过依次查询多级页表来定位最终要指向的页帧：</p>
 <ol>
@@ -340,8 +352,11 @@
 <li>载入3级页表，根据索引号0，确定2级页表的地址是24KiB。</li>
 <li>载入2级页表，根据索引号511，确定1级页表的地址是32KiB。</li>
 <li>载入1级页表，根据索引号127，确定该地址所对应的页帧地址为12KiB，使用Hex表达可写作 0x3000。</li>
-<li>最终步骤就是将最后的页偏移量拼接到页帧地址上，即可得到物理地址，即 0x3000 + 0x5ce &#x3D; 0x35ce。<br>  <img src="https://i-blog.csdnimg.cn/direct/64e5878e33f74d669954e9ac18212152.png#pic_center" alt="在这里插入图片描述"></li>
+<li>最终步骤就是将最后的页偏移量拼接到页帧地址上，即可得到物理地址，即 0x3000 + 0x5ce &#x3D; 0x35ce。</li>
 </ol>
+<ul>
+<li><img src="/images/mm/image-10.png" alt="alt text"></li>
+</ul>
 </li>
 <li><p>由上图可知，该页帧在一级页表中的权限被标记为<strong>r</strong>，即只读，硬件层面已经确保当我们试图写入数据的时候会抛出异常。较高级别的页表的权限设定会覆盖较低级别的页表，如3级页表中设定为只读的区域，其所关联的所有下级页表对应的内存区域均会被认为是只读，低级别的页表本身的设定会被忽略。</p>
 </li>
@@ -467,11 +482,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2024/12/01/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
-    </a></div>
       <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/03/PAT/" rel="next" title="DragonOS虚拟化正确设置PAT经历">
+      DragonOS虚拟化正确设置PAT经历 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -546,7 +561,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -555,6 +570,9 @@
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
         <a href="https://github.com/BrahmaMantra" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;BrahmaMantra" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2033552517@qq.com" title="E-Mail → 2033552517@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
