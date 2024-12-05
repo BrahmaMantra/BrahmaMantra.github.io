@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"brahmamantra.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
+  <meta name="description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈内存管理（以linux x86为例）">
 <meta property="og:url" content="https://brahmamantra.github.io/2024/12/01/mm/index.html">
 <meta property="og:site_name" content="BrahmaMantra&#39;s Blog">
-<meta property="og:description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CPU可">
+<meta property="og:description" content="操作系统下的内存管理内存保护 操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用段页式进行管理。  内存分段大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想  CP">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://brahmamantra.github.io/images/mm/image.png">
 <meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-1.png">
@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-9.png">
 <meta property="og:image" content="https://brahmamantra.github.io/images/mm/image-10.png">
 <meta property="article:published_time" content="2024-12-01T09:36:02.407Z">
-<meta property="article:modified_time" content="2024-12-05T08:22:37.323Z">
+<meta property="article:modified_time" content="2024-12-05T13:44:54.564Z">
 <meta property="article:author" content="BrahmaMantra">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://brahmamantra.github.io/images/mm/image.png">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-05 16:22:37" itemprop="dateModified" datetime="2024-12-05T16:22:37+08:00">2024-12-05</time>
+                <time title="Modified: 2024-12-05 21:44:54" itemprop="dateModified" datetime="2024-12-05T21:44:54+08:00">2024-12-05</time>
               </span>
 
           
@@ -211,7 +211,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
+        <meta name="referrer" content="no-referrer"/>
+
+<h2 id="操作系统下的内存管理"><a href="#操作系统下的内存管理" class="headerlink" title="操作系统下的内存管理"></a>操作系统下的内存管理</h2><h3 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h3><ul>
 <li>操作系统的主要任务之一就是隔离各个应用程序的执行环境，比如你的浏览器不应对你的文本编辑器造成影响，因此，操作系统会利用硬件级别的功能确保一个进程无法访问另一个进程的内存区域，但具体实现方式因硬件和操作系统实现而异。在x86架构下，利用<strong>段页式</strong>进行管理。</li>
 </ul>
 <h3 id="内存分段"><a href="#内存分段" class="headerlink" title="内存分段"></a>内存分段</h3><p>大多数系统放弃内存分段技术，而转用内存分页技术，详情见下，所以我们不太深入，只了解一下基本的思想</p>
