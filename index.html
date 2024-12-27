@@ -166,7 +166,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/12/27/before-os/" class="post-title-link" itemprop="url">Untitled</a>
+            <a href="/2024/12/27/before-os/" class="post-title-link" itemprop="url">启动操作系统之前发生了什么</a>
         </h2>
 
         <div class="post-meta">
@@ -177,7 +177,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-12-27 17:25:46 / Modified: 17:29:12" itemprop="dateCreated datePublished" datetime="2024-12-27T17:25:46+08:00">2024-12-27</time>
+              <time title="Created: 2024-12-27 17:25:46 / Modified: 17:31:47" itemprop="dateCreated datePublished" datetime="2024-12-27T17:25:46+08:00">2024-12-27</time>
             </span>
 
           
@@ -191,7 +191,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="计算机从启动电源到进入界面发生了什么？"><a href="#计算机从启动电源到进入界面发生了什么？" class="headerlink" title="计算机从启动电源到进入界面发生了什么？"></a>计算机从启动电源到进入界面发生了什么？</h2><ol>
+          <meta name="referrer" content="no-referrer">
+
+<h2 id="计算机从启动电源到进入界面发生了什么？"><a href="#计算机从启动电源到进入界面发生了什么？" class="headerlink" title="计算机从启动电源到进入界面发生了什么？"></a>计算机从启动电源到进入界面发生了什么？</h2><ol>
 <li>bios电自检(POST:power on system test):确认硬件是可用的，没有被损坏（代表CPU可用）</li>
 <li>cpu去实行bios的指令，根据内部的Boot Sequence（引导顺序），找到引导设备，如果找不到可引导设备就启动失败！</li>
 <li>找到可引导设备后，读取该设备的第一个扇区，即MBR，里面前446 Bytes 包含引导程序1，然后跳转到引导程序2</li>
@@ -232,10 +234,7 @@
 <h3 id="实模式（Real-Mode）"><a href="#实模式（Real-Mode）" class="headerlink" title="实模式（Real Mode）"></a>实模式（Real Mode）</h3><ul>
 <li>只能访问20bits（1M）的内存,由两个16bits的寄存器组成，也就是16bit访问1M内存</li>
 </ul>
-<h4 id="什么是实模式？"><a href="#什么是实模式？" class="headerlink" title="什么是实模式？"></a>什么是实模式？</h4><ul>
-<li>实模式：其中形如0x1000:0x0010这样的寻址形式，对应的目标位置物理地址为(0x1000 &lt;&lt; 4) + 0x0010 &#x3D; 0x10010。前一部分称为段地址，后一部分称为段内偏移。两个地址数值上必须限定在16位宽度。两部分合起来计算出的物理地址位宽限定在20位宽度。</li>
-<li>举例子：0xFFFF:0xFFFF &#x3D; 0xFFFF &lt;&lt; 4 + 0xFFFF &#x3D; 0x10FFEF，这样的一个物理地址至少需要21个比特位来表达，就超过了20个比特位的限制。所以，0xFFFF:0xFFFF实际的物理地址为0xFFEF。超出20个比特位部分被舍弃掉了。</li>
-</ul>
+<h4 id="什么是实模式？"><a href="#什么是实模式？" class="headerlink" title="什么是实模式？"></a>什么是实模式？</h4>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2024/12/27/before-os/#more" rel="contents">
